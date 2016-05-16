@@ -10,10 +10,13 @@ class StoreController extends AbstractController {
    * @Method("GET")
    */
   function indexAction() {
-    $pdao = new ProductDAO();
-	$products = $pdao->getProducts();
-	$cdao = new CategoryDAO();
+    $cdao = new CategoryDAO();
 	$categories = $cdao->getCategories();
+	$pdao = new ProductDAO();
+	$products = $pdao->getProducts();
+	foreach($categories as $category){
+		$category->setBadge(count($pdao->getProductsByCategory($category->id())));
+	}
     return parent::render('store.html', array(
 		"products" => $products,
 		"categories" => $categories
