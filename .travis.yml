@@ -24,9 +24,7 @@ addons:
     # Let's install Apache with.
     - apache2
     # mod_php is not supported by Travis. Add fcgi. We install FPM later on.
-    - libapache2-mod-php5 
     - mysql-server
-    - php5-memcache
 
 # Start on every boot
 services:
@@ -35,7 +33,7 @@ services:
 env:
   global:
   # Set to true for very verbose output
-  - DEBUG=false
+  - DEBUG=true
   matrix:
   # MariaDB overrides MySQL installation so it's not possible to test both yet
   - DB=mysql
@@ -72,6 +70,12 @@ before_install:
   echo
 
 install:
+
+- |
+  echo "Adding packages"
+  sudo apt-get -qq update
+  sudo apt-get install libapache2-mod-fcgid apache2-mpm-worker
+
 - |
   echo "Updating Composer"
   composer self-update
@@ -158,6 +162,7 @@ before_script:
     echo "MySQL"
     sudo mysql -e 'CREATE USER travis;'
     sudo mysql -e 'GRANT ALL ON *.* TO '\''travis'\''@'\''%'\'';'
+    sudo mysql -e 'GRANT ALL ON *.* TO '\''travis'\''@'\''localhost'\'';'
     mysql -e 'DROP DATABASE IF EXISTS travis;'
     mysql -e 'CREATE DATABASE IF NOT EXISTS travis;'
     mysql -D travis < ~/dolibarr/dev/initdemo/mysqldump_dolibarr_3.5.0.sql
@@ -198,26 +203,26 @@ before_script:
   echo
 
 - |
-  echo "Setting up Apache + FPM"
-  # enable php-fpm
-  cp ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.conf.default ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.conf
-  if [ "$TRAVIS_PHP_VERSION" = '7.0' ] || [ "$TRAVIS_PHP_VERSION" = 'nightly' ]; then
+  echo "Setting up Apache + PHP"
+   cp ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.conf.default ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.conf
+   if [ "$TRAVIS_PHP_VERSION" = '7.0' ] || [ "$TRAVIS_PHP_VERSION" = 'nightly' ]; then
     # Copy the included pool
     cp ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.d/www.conf
   fi
-  if [ "$DEBUG" = true ]; then
-    cat ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php-fpm.conf
-  fi
-  sudo a2enmod rewrite actions fastcgi alias
-  echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php.ini
-  if [ "$DEBUG" = true ]; then
-    cat ~/.phpenv/versions/$PHP_VERSION_NAME/etc/php.ini
-  fi
-  ~/.phpenv/versions/$PHP_VERSION_NAME/sbin/php-fpm
-  # configure apache virtual hosts
-  sudo cp -f ~/dolibarr/build/travis-ci/apache.conf /etc/apache2/sites-available/default
+  sudo a2dismod mpm_event
+  sudo a2enmod rewrite actions fcgid alias mpm_worker vhost_alias allowmethods
 
-  sudo sed -e "s?%TRAVIS_BUILD_DIR%?$HOME/dolibarr?g" --in-place /etc/apache2/sites-available/default
+  # configure apache virtual hosts
+  sudo cp -f build/apache.conf /etc/apache2/sites-available/default
+  echo "[Apache mods enabled]"
+  ls /etc/apache2/mods-enabled
+  echo "[Apache mods available]"
+  ls /etc/apache2/mods-available
+  ls ~/.phpenv/versions/$PHP_VERSION_NAME/bin
+  sudo sed -e "s?%TRAVIS_BUILD_DIR%?/home/travis/dolibarr?g" --in-place /etc/apache2/sites-available/default
+  FCGID_WRAPPER=~/.phpenv/versions/$PHP_VERSION_NAME/bin/php-cgi
+  echo $FCGID_WRAPPER
+  sudo sed -e "s?%FCGID_WRAPPER%?$FCGID_WRAPPER?g" --in-place /etc/apache2/sites-available/default
   if [ "$DEBUG" = true ]; then
     sudo cat /etc/apache2/sites-available/default
   fi
@@ -233,13 +238,13 @@ before_script:
 script:
 - |
   echo "Checking webserver availability"
-  # Ensure we catch errors
-  set -e
-  wget http://127.0.0.1
+  # Ensure we do not catch errors
+  set +e
+  wget http://127.0.0.1/
   if [ "$DEBUG" = true ]; then
     cat index.html
   fi
-  set +e
+  set -e
   echo
 
 - |
