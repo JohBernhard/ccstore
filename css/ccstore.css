@@ -1,0 +1,13 @@
+body {
+		padding-top: 100px;
+        padding-bottom: 20px;
+		font-family			:	'PoetsenOne-Regular';
+}
+.title{
+	font-size: 28px;
+	font-weight: bold;
+}
+.price{
+	font-size: 28px;
+	font-weight: bold;
+}

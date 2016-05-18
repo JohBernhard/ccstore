@@ -11,7 +11,10 @@ class Product {
 						$title,
 						$ref, // reference produit
 						$price,
+						$price_u, // int val of price
+						$price_d, // int format of price's decimal
 						$tva,
+						$packaging, 
 						$weight,
 						$weight_unit,
 						$description = "",
@@ -41,7 +44,10 @@ class Product {
 		public function id() {return $this->id;}
 		public function title() {return $this->title;}
 		public function price() {return $this->price;}
+		public function price_u() {return $this->price_u;}
+		public function price_d() {return $this->price_d;}
 		public function tva() {return $this->tva;}
+		public function packaging() {return $this->packaging;}
 		public function weight() {return $this->weight;}
 		public function weight_unit() {return $this->weight_unit;}
 		public function description() {return $this->description;}
@@ -54,9 +60,14 @@ class Product {
 		//setter
 		public function setId($id) { $this->id = (int) $id;}
 		public function setTitle($title) { $this->title = strtoupper($title);}
-		public function setPrice($price) { $this->price =  $price;}
+		public function setPrice($price) { 
+			$this->price =  round($price, 2, PHP_ROUND_HALF_UP);
+			$this->price_u = floor($this->price);
+			$this->price_d = ($this->price-floor($this->price))*100;
+		}
 		public function setCategories($categories) { $this->categories =  $categories;}
 		public function setTva($tva) { $this->tva =  $tva;}
+		public function setPackaging($packaging) { $this->packaging = $packaging;}
 		public function setWeight($weight) {$this->weight = $weight;}
 		public function setWeight_unit($unit) {
 			switch($unit){

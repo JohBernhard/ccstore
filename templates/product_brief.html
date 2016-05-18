@@ -5,11 +5,11 @@
 		</div><!-- ENDBLOCK PRODUCT.IMG-->
 		<div class="caption"><!-- BLOCK INFO PRODUCT -->
 			<div class="row"><!-- LINE PRODUCT.TITLE & PRODUCT.PRICE-->
-				<div class="title col-md-8">{{ product.title }}</div>
-				<div class="price col-md-4">{{ product.price }} €</div>
+				<div class="title col-md-9">{{ product.title }}</div>
+				<div class="price col-md-3">{{ product.price_u }} €<sup>{{product.price_d}}</div>
 			</div><!-- ENDLINE -->
-			<div class="row"><!-- LINE PRODUCT.WEIGHT -->
-				<p class="bg-info" style="text-align:right;padding-right:10px">~ {{product.weight}} {{product.weight_unit}}</p>
+			<div class="row"><!-- LINE PRODUCT.PACKAGING & PRODUCT.WEIGHT -->
+				<p class="left-block col-md-6 bg-info">{{product.packaging}}</p><p class="right-block col-md-6 bg-info" style="text-align:right;padding-right:10px"> ~ {{product.weight}} {{product.weight_unit}}</p>
 			</div>
 			<div class="row"><!-- LINE BTN SHOW DETAIL & FORM ORDER -->
 				<div class="col-md-6"><a class="btn btn-success" href="{{base_path}}/store/{{product.id}}" role="button">Voir details &raquo;</a></div>
