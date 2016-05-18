@@ -6,11 +6,14 @@
 		<div class="caption"><!-- BLOCK INFO PRODUCT -->
 			<div class="row"><!-- LINE PRODUCT.TITLE & PRODUCT.PRICE-->
 				<div class="title col-md-9">{{ product.title }}</div>
-				<div class="price col-md-3">{{ product.price_u }} €<sup>{{product.price_d}}</div>
+				<div class="price col-md-3">{{ product.price_u }} €<sup>{{product.price_d}}</sup></div>
 			</div><!-- ENDLINE -->
 			<div class="row"><!-- LINE PRODUCT.PACKAGING & PRODUCT.WEIGHT -->
 				<p class="left-block col-md-6 bg-info">{{product.packaging}}</p><p class="right-block col-md-6 bg-info" style="text-align:right;padding-right:10px"> ~ {{product.weight}} {{product.weight_unit}}</p>
 			</div>
+			<div class="row"><!-- LINE PRODUCT.PRICEPER.UNIT-->
+				<p class="right-block col-md-12 bg-warning">{{product.priceper}} € / {{product.unit}}</p>
+			</div><!--ENDLINE PRODUCT.PRICEPER.UNIT-->
 			<div class="row"><!-- LINE BTN SHOW DETAIL & FORM ORDER -->
 				<div class="col-md-6"><a class="btn btn-success" href="{{base_path}}/store/{{product.id}}" role="button">Voir details &raquo;</a></div>
 				<form class="form-inline">

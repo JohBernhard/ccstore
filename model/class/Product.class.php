@@ -11,12 +11,16 @@ class Product {
 						$title,
 						$ref, // reference produit
 						$price,
+						$priceper, // price per 1 unit
+						$unit = null, // Value can be "Litre / Kilogramme / piece"
 						$price_u, // int val of price
 						$price_d, // int format of price's decimal
 						$tva,
-						$packaging, 
+						$packaging = " ", 
 						$weight,
 						$weight_unit,
+						$volume,
+						$volume_unit,
 						$description = "",
 						$is_active,
 						$img,
@@ -44,12 +48,29 @@ class Product {
 		public function id() {return $this->id;}
 		public function title() {return $this->title;}
 		public function price() {return $this->price;}
+		public function priceper() {
+			if($this->weight_unit == "g"){
+				$this->priceper = ($this->price*1000)/$this->weight;
+				return round($this->priceper, 2, PHP_ROUND_HALF_UP);
+			}
+			else{
+				return $this->price;
+			}
+		}
+		public function unit() { 
+			if($this->unit == null){
+				$this->unit = "pièce";
+			}
+			return $this->unit;
+		}
 		public function price_u() {return $this->price_u;}
 		public function price_d() {return $this->price_d;}
 		public function tva() {return $this->tva;}
 		public function packaging() {return $this->packaging;}
 		public function weight() {return $this->weight;}
 		public function weight_unit() {return $this->weight_unit;}
+		public function volume() { return $this->volume;}
+		public function volume_unit() { return $this->volume_unit;}
 		public function description() {return $this->description;}
 		public function is_active() { return $this->is_active;}
 		public function img() {return $this->img;}
@@ -76,8 +97,27 @@ class Product {
 				break;
 				case "-3" :
 					$wu = "g";
+				break;
 			}
 			$this->weight_unit = $wu;
+			if($this->weight_unit != null && $this->weight_unit != ""){
+				$this->unit = "Kg";
+			}
+		}
+		public function setVolume($volume) {$this->volume = $volume;}
+		public function setVolume_unit($unit) {
+			switch($unit){
+				case "0" : 
+					$vu = "";
+				break;
+				case "-3" :
+					$vu = "L";
+				break;
+			}
+			$this->volume_unit = $vu;
+			if($this->volume_unit != null && $this->volume_unit != ""){
+				$this->unit = "L";
+			}
 		}
 		public function setDescription($description) { 
 			if (is_string($description))

@@ -77,7 +77,9 @@ public function deleteProduct(Product $product){
 	  "packaging" => $data->note,
       "price" => (float)$data->price_ttc,
 	  "weight" => $data->weight,
-	  "weight_unit" => $data->weight_units
+	  "weight_unit" => $data->weight_units,
+	  "volume" => $data->volume,
+	  "volume_unit" => $data->volume_units
     ));
     return $product;
   }
