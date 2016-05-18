@@ -80,7 +80,7 @@ class Product {
 		public function producers() { return $this->producers;}
 		//setter
 		public function setId($id) { $this->id = (int) $id;}
-		public function setTitle($title) { $this->title = strtoupper($title);}
+		public function setTitle($title) { $this->title = $title;} //strtoupper()
 		public function setPrice($price) { 
 			$this->price =  round($price, 2, PHP_ROUND_HALF_UP);
 			$this->price_u = floor($this->price);

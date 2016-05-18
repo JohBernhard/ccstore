@@ -8,11 +8,13 @@
   <!-- Example row of columns -->
   <!-- div class="row" -->
   {% include "store_sidebar.html" %}
-  <div class="col-md-9">
-  {% for product in products %}
+	<div class="col-sm-12 col-md-10">
+		<ul class="list-inline list-unstyled">
+ {% for product in products %}
     {% include "product_brief.html" %}
   {% endfor %}
-  </div>
+		</ul>
+	</div>
 </div>
 {% endblock %}
 

@@ -1,33 +1,28 @@
-<div class="col-sm-6 col-md-6" ><!-- CONTAINER THUMBNAIL PRODUCT_BRIEF -->
-	<div class="thumbnail"><!-- BLOCK THUMBNAIL TO PRODUCT_BRIEF -->
-		<div class="row"><!-- BLOCK PRODUCT.IMG -->
-			<img src="{{base_path}}/img/design/nophoto.png" class="center-block img-responsive" alt="*Image produit*"/>
-		</div><!-- ENDBLOCK PRODUCT.IMG-->
-		<div class="caption"><!-- BLOCK INFO PRODUCT -->
-			<div class="row"><!-- LINE PRODUCT.TITLE & PRODUCT.PRICE-->
-				<div class="title col-md-9">{{ product.title }}</div>
-				<div class="price col-md-3">{{ product.price_u }} €<sup>{{product.price_d}}</sup></div>
-			</div><!-- ENDLINE -->
-			<div class="row"><!-- LINE PRODUCT.PACKAGING & PRODUCT.WEIGHT -->
-				<p class="left-block col-md-6 bg-info">{{product.packaging}}</p><p class="right-block col-md-6 bg-info" style="text-align:right;padding-right:10px"> ~ {{product.weight}} {{product.weight_unit}}</p>
+<li class="col-sm-10 col-md-6 col-xs-10" style="padding:20px">
+	<div class="row">
+		<img src="{{base_path}}/img/design/nophoto.png" class="center-block img-responsive" alt="*Image produit*"/>
+	</div>
+	<div class="row">
+		<div class="title text-uppercase col-sm-9 col-xs-8 text-left">{{ product.title }}</div><div class="price col-sm-3 col-xs-4 text-right">{{ product.price_u }} €<sup>{{product.price_d}}</sup></div>	
+	</div>
+	<div class="row bg-info">
+	<div class="text-left col-sm-9 col-xs-8 text-left">{{product.packaging}}</div><div class="text-right col-sm-3 col-xs-4 text-right">~ {{product.weight}} {{product.weight_unit}}</div>
+	</div>
+	<div class="row">
+	<p class="text-right col-sm-12 col-xs-12">{{product.priceper}} € / {{product.unit}}</p>
+	</div>
+	<div class="row">
+		<p class="col-md-6"><a class="btn btn-success" href="{{base_path}}/store/{{product.id}}" role="button">Voir details &raquo;</a></p>
+		<form class="form-inline">
+			<div class="input-group col-md-5">
+				<span class="input-group-addon">
+					<div>Qté</div>
+				</span>
+				<input type="number" class="form-control" name="quantite" min='1' placeholder='1'/>
+				<span class="input-group-btn">
+				<button type="submit" class="btn btn-primary">Ajouter</button>
+				</span>
 			</div>
-			<div class="row"><!-- LINE PRODUCT.PRICEPER.UNIT-->
-				<p class="right-block col-md-12 bg-warning">{{product.priceper}} € / {{product.unit}}</p>
-			</div><!--ENDLINE PRODUCT.PRICEPER.UNIT-->
-			<div class="row"><!-- LINE BTN SHOW DETAIL & FORM ORDER -->
-				<div class="col-md-6"><a class="btn btn-success" href="{{base_path}}/store/{{product.id}}" role="button">Voir details &raquo;</a></div>
-				<form class="form-inline">
-					<div class="input-group col-md-5">
-						<span class="input-group-addon">
-							<div>Qté</div>
-						</span>
-						<input type="number" class="form-control" name="quantite" min='1' placeholder='1'/>
-						<span class="input-group-btn">
-						<button type="submit" class="btn btn-primary">Ajouter</button>
-						</span>
-					</div>
-				</form>
-			</div><!-- ENDLINE BTN SHOW DETAIL & FORM ORDER -->
-		</div><!-- ENDBLOCK INFO PRODUCT -->
-	</div><!-- ENDBLOCK THUMBNAIL TO PRODUCT_BRIEF -->
-</div><!-- ENDCONTAINER THUMBNAIL PRODUCT_BRIEF -->
+		</form>
+	</div>
+</li>
