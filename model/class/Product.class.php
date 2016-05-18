@@ -12,6 +12,8 @@ class Product {
 						$ref, // reference produit
 						$price,
 						$tva,
+						$weight,
+						$weight_unit,
 						$description = "",
 						$is_active,
 						$img,
@@ -40,6 +42,8 @@ class Product {
 		public function title() {return $this->title;}
 		public function price() {return $this->price;}
 		public function tva() {return $this->tva;}
+		public function weight() {return $this->weight;}
+		public function weight_unit() {return $this->weight_unit;}
 		public function description() {return $this->description;}
 		public function is_active() { return $this->is_active;}
 		public function img() {return $this->img;}
@@ -49,10 +53,21 @@ class Product {
 		public function producers() { return $this->producers;}
 		//setter
 		public function setId($id) { $this->id = (int) $id;}
-		public function setTitle($title) { $this->title = $title;}
+		public function setTitle($title) { $this->title = strtoupper($title);}
 		public function setPrice($price) { $this->price =  $price;}
 		public function setCategories($categories) { $this->categories =  $categories;}
 		public function setTva($tva) { $this->tva =  $tva;}
+		public function setWeight($weight) {$this->weight = $weight;}
+		public function setWeight_unit($unit) {
+			switch($unit){
+				case "0" : 
+					$wu = "Kg";
+				break;
+				case "-3" :
+					$wu = "g";
+			}
+			$this->weight_unit = $wu;
+		}
 		public function setDescription($description) { 
 			if (is_string($description))
 				{$this->description = $description;}

@@ -58,6 +58,7 @@ class ProductDAO extends AbstractRestClient {
   }
   public function createProduct(Product $product){
 	  /*DO SOMETHING*/
+	  return $product; 
   }
   public function updateProduct(Product $product){
 	  /*DO SOMETHING*/
@@ -73,7 +74,9 @@ public function deleteProduct(Product $product){
       "title" => $data->label,
       "description" => $data->description,
       "tva" => (float)$data->tva_tx,
-      "price" => (float)$data->price_ttc
+      "price" => (float)$data->price_ttc,
+	  "weight" => $data->weight,
+	  "weight_unit" => $data->weight_units
     ));
     return $product;
   }
