@@ -1,7 +1,8 @@
-<div class="col-md-9" style="border:1px solid black;">
-	<img src="" alt="image grand format" width="733" height="488"/>
+<div class="col-md-9 col-xs-12 col-sm-9" style="margin:0px;padding:0px">
+	<img src="{{base_path}}/img/produit/test.jpg" class="img-responsive img-rounded" alt="image grand format" width="733" height="488"/>
 </div>
 <div class="col-md-3">
-	<h3>{{product.title}}</h3>
-	<p> Fiche produit</p>
+	<div class="title text-uppercase col-md-9 col-sm-9 col-xs-8 text-left">{{ product.title }}</div><div class="price col-md-3 col-sm-3 col-xs-4 text-right">{{ product.price_u }} €<sup>{{product.price_d}}</sup></div>
+	<h4> Fiche produit</h4>
+	<p>{{product.description}}</p>
 </div>
