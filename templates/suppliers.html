@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Vos producteurs locaux{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+  <!-- Example row of columns -->
+  <!-- div class="row" -->
+	<div class="col-sm-12 col-md-12">
+		<ul class="list-inline list-unstyled text-center">
+ {% for supplier in suppliers %}
+    {% include "supplier_brief.html" %}
+  {% endfor %}
+		</ul>
+	</div>
+</div>
+{% endblock %}

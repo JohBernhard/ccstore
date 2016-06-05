@@ -10,6 +10,7 @@ if ($path == "" || $path == null || $path == "/index.php") {
 require 'vendor/autoload.php';
 
 require_once 'controller/StoreController.php';
+require_once 'controller/SupplierController.php';
 require_once 'controller/ContactController.php';
 require_once 'controller/InscriptionController.php';
 require_once 'controller/DebugController.php';
@@ -21,6 +22,7 @@ use Pux\Executor;
 
 $mux = new Pux\Mux;
 $mux->mount("/store", new StoreController());
+$mux->mount("/supplier", new SupplierController());
 $mux->mount("/contact", new ContactController());
 $mux->mount("/inscription", new InscriptionController());
 $mux->mount("/debug", new DebugController());
